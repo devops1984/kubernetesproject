@@ -21,7 +21,7 @@ pipeline {
 			     ], 
 				     credentialsId: 'NEXUS3', 
 				     groupId: 'com.example.maven-project', 
-				     nexusUrl: '10.6.0.4', 
+				     nexusUrl: '10.6.0.4:8081', 
 				     nexusVersion: 'nexus3', 
 				     protocol: 'http', 
 				     repository: 'demo-app', 
