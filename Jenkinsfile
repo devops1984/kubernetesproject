@@ -15,7 +15,7 @@ pipeline {
 				     [
 					     artifactId: 'webapp', 
 					     classifier: '', 
-					     file: 'target/webapp.war', 
+					     file: '*/*.war', 
 					     type: 'war'
 				     ]
 			     ], 
