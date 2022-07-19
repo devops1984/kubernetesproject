@@ -7,8 +7,14 @@ pipeline {
 	    stage('Build'){
 		    steps{
 			     sh script: 'mvn clean package'
+			     
 			}
 		}
+		stage('copy build artifact') {
+                    steps {
+                             sh 'cp /var/lib/jenkins/workspace/Demo-app/webapp/target/webapp.war /opt/tomcat/webapps'
+                       }
+                }
 		stage('Upload War to Nexus'){
 		    steps{
 			     nexusArtifactUploader artifacts: [
