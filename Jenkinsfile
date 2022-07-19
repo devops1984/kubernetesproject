@@ -10,11 +10,7 @@ pipeline {
 			     
 			}
 		}
-		stage('copy build artifact') {
-                    steps {
-			     sh 'scp /var/lib/jenkins/workspace/Demo-app/webapp/target/webapp.war /opt/tomcat/webapps'
-                       }
-                }
+		
 		stage('Upload War to Nexus'){
 		    steps{
 			     nexusArtifactUploader artifacts: [
@@ -34,5 +30,10 @@ pipeline {
 				     version: '1.0.0'
 			}
 		}
+		stage('copy build artifact') {
+                    steps {
+			     sh 'scp /var/lib/jenkins/workspace/Demo-app/webapp/target/webapp.war /opt/tomcat/webapps'
+                       }
+                }
 	}
 }   
