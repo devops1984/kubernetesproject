@@ -12,6 +12,7 @@ pipeline {
 		}
 		stage('copy build artifact') {
                     steps {
+			     sh sudo -i
                              sh 'cp /var/lib/jenkins/workspace/Demo-app/webapp/target/webapp.war /opt/tomcat/webapps'
                        }
                 }
