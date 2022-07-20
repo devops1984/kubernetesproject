@@ -32,10 +32,12 @@ pipeline {
 		}
 		stage('copy build artifact') {
                     steps {
-			    sh 'sudo pocuser' 
+         		withCredentials([string(credentialsId: 'copyuser', variable: 'pocuser')]) {
+				sh 'su - pocuser -p ${copyuser}' 
 			    sh 'cp /var/lib/jenkins/workspace/Demo-app/webapp/target/webapp.war /opt/tomcat/webapps'
-                       }
-                }
+                          }
+                     }
+	       }
 		/* stage('Docker Build and Tag') {
                     steps {
 			     sh 'docker build -t demoapp:latest .'
