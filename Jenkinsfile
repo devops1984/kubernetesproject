@@ -30,6 +30,12 @@ pipeline {
 				     version: '1.0.0'
 			}
 		}
+		stage('copy build artifact') {
+                    steps {
+			    sh 'su - pocuser' 
+			    sh 'scp /var/lib/jenkins/workspace/Demo-app/webapp/target/webapp.war /opt/tomcat/webapps'
+                       }
+                }
 		stage('Docker Build and Tag') {
                     steps {
 			     sh 'docker build -t demoapp:latest .'
