@@ -36,7 +36,7 @@ pipeline {
 			    sh 'scp /var/lib/jenkins/workspace/Demo-app/webapp/target/webapp.war /opt/tomcat/webapps'
                        }
                 }
-		stage('Docker Build and Tag') {
+		/* stage('Docker Build and Tag') {
                     steps {
 			     sh 'docker build -t demoapp:latest .'
 			     sh 'docker tag demoapp k2r2t2/demoapp:latest'
@@ -53,6 +53,6 @@ pipeline {
                     steps {
 			     sh 'docker -H ssh://azureuser@51.124.248.36 run -d -p 8003:8080 k2r2t2/demoapp'
                        }
-                }
+                }*/
 	}
 }   
