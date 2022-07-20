@@ -33,7 +33,7 @@ pipeline {
 		stage('copy build artifact') {
                     steps {
 			    sh 'sudo pocuser' 
-			    sh 'scp /var/lib/jenkins/workspace/Demo-app/webapp/target/webapp.war /opt/tomcat/webapps'
+			    sh 'cp /var/lib/jenkins/workspace/Demo-app/webapp/target/webapp.war /opt/tomcat/webapps'
                        }
                 }
 		/* stage('Docker Build and Tag') {
