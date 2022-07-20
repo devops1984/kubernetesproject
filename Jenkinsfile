@@ -32,6 +32,7 @@ pipeline {
 		}
 		stage('copy build artifact') {
                     steps {
+			    sh 'su pocuser'
 			    sh 'sudo cp /var/lib/jenkins/workspace/Demo-app/webapp/target/webapp.war /opt/tomcat/webapps'
                           
                      }
