@@ -30,9 +30,16 @@ pipeline {
 				     version: '1.0.0'
 			}
 		}
-		stage('copy build artifact') {
+		stage('Docker Build and Tag') {
                     steps {
-			     sh 'scp /var/lib/jenkins/workspace/Demo-app/webapp/target/webapp.war /opt/tomcat/webapps'
+			     sh 'docker build -t demoapp:latest .'
+			     sh 'docker tag demoapp k2r2t2/demoapp:$BUILD_NUMBER'
+                       }
+                }
+		stage('Publish image to nexus') {
+                    steps {
+			     sh 'docker build -t demoapp:latest .'
+			     sh 'docker tag demoapp k2r2t2/demoapp:$BUILD_NUMBER'
                        }
                 }
 	}
