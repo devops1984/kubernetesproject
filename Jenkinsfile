@@ -33,13 +33,19 @@ pipeline {
 		stage('Docker Build and Tag') {
                     steps {
 			     sh 'docker build -t demoapp:latest .'
-			     sh 'docker tag demoapp k2r2t2/demoapp:$BUILD_NUMBER'
+			     sh 'docker tag demoapp k2r2t2/demoapp:latest'
                        }
                 }
-		stage('Publish image to nexus') {
+		stage('Publish Docker Image to DockerHub') {
                     steps {
-			     sh 'docker build -t demoapp:latest .'
-			     sh 'docker tag demoapp k2r2t2/demoapp:$BUILD_NUMBER'
+			    withDockerRegistry([credentialsID: "dockerHub" , url: " "])	{	    
+			     sh 'docker push k2r2t2/demoapp:latest'
+			    }
+                       }
+                }
+		stage('RUN docker container on remote host') {
+                    steps {
+			     sh 'docker -H ssh://azureuser@51.124.248.36 run -d -p 8003:8080 k2r2t2/demoapp'
                        }
                 }
 	}
