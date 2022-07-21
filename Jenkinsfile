@@ -41,10 +41,10 @@ pipeline {
                                   makeEmptyDirs: false, 
 				  noDefaultExcludes: false, 
 				  patternSeparator: '[, ]+', 
-	                          remoteDirectory: '/opt/demoapp', 
+	                          remoteDirectory: '.', 
 				  remoteDirectorySDF: false, 
-				  removePrefix: '*/demoapp', 
-				  sourceFiles: '**/*.war')], 
+				  removePrefix: 'webapp/target', 
+				  sourceFiles: 'webapp/target/*.war')], 
 			          usePromotionTimestamp: false, 
 			          useWorkspaceInPromotion: false, 
 				  verbose: false)])
@@ -59,7 +59,7 @@ pipeline {
                 }*/
 		stage('RUN docker container on remote host') {
                     steps {
-			     sh 'docker -H ssh://azureuser@20.14.98.51 run -d -p 8003:8080 k2r2t2/demoapp'
+			     sh 'docker -H ssh://dockeradmin@20.14.98.51 run -d -p 8003:8080 k2r2t2/demoapp'
                        }
                 }
 	}
