@@ -36,13 +36,13 @@ pipeline {
 			     sh 'docker tag demoapp k2r2t2/demoapp:latest'
                        }
                 }
-		stage('Publish Docker Image to DockerHub') {
+		/*stage('Publish Docker Image to DockerHub') {
                     steps {
 			    withDockerRegistry([credentialsID: "dockerHub" , url: ""])	{	    
 			     sh 'docker push k2r2t2/demoapp:latest'
 			    }
                        }
-                }
+                }*/
 		stage('RUN docker container on remote host') {
                     steps {
 			     sh 'docker -H ssh://azureuser@20.14.98.51 run -d -p 8003:8080 k2r2t2/demoapp'
