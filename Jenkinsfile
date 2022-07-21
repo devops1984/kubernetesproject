@@ -38,7 +38,7 @@ pipeline {
                 }
 		stage('Publish Docker Image to DockerHub') {
                     steps {
-			    withDockerRegistry([credentialsID: "dockerHub" , url: "https://hub.docker.com"])	{	    
+			    withDockerRegistry([credentialsID: "dockerHub" , url: ""])	{	    
 			     sh 'docker push k2r2t2/demoapp:latest'
 			    }
                        }
