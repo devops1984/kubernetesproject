@@ -32,8 +32,22 @@ pipeline {
 		}
 		stage('Docker Build and Tag') {
                     steps {
-			     sh 'docker build -t demoapp:latest .'
-			     sh 'docker tag demoapp k2r2t2/demoapp:latest'
+			    sshPublisher(publishers: [sshPublisherDesc(configName: 'dockerhost', 
+				  transfers: [sshTransfer(cleanRemote: false, excludes: '', 
+				  execCommand: '''docker build -t demoapp:latest .
+                                  docker tag demoapp k2r2t2/demoapp:latest''', 
+                                  execTimeout: 120000, 
+				  flatten: false, 
+                                  makeEmptyDirs: false, 
+				  noDefaultExcludes: false, 
+				  patternSeparator: '[, ]+', 
+	                          remoteDirectory: '/opt/demoapp', 
+				  remoteDirectorySDF: false, 
+				  removePrefix: '*/demoapp', 
+				  sourceFiles: '**/*.war')], 
+			          usePromotionTimestamp: false, 
+			          useWorkspaceInPromotion: false, 
+				  verbose: false)])
                        }
                 }
 		/*stage('Publish Docker Image to DockerHub') {
