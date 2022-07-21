@@ -30,14 +30,7 @@ pipeline {
 				     version: '1.0.0'
 			}
 		}
-		stage('copy build artifact') {
-                    steps {
-			    sh 'su pocuser'
-			    sh 'sudo cp /var/lib/jenkins/workspace/Demo-app/webapp/target/webapp.war /opt/tomcat/webapps'
-                          
-                     }
-	       }
-		/* stage('Docker Build and Tag') {
+		stage('Docker Build and Tag') {
                     steps {
 			     sh 'docker build -t demoapp:latest .'
 			     sh 'docker tag demoapp k2r2t2/demoapp:latest'
@@ -52,8 +45,8 @@ pipeline {
                 }
 		stage('RUN docker container on remote host') {
                     steps {
-			     sh 'docker -H ssh://azureuser@51.124.248.36 run -d -p 8003:8080 k2r2t2/demoapp'
+			     sh 'docker -H ssh://azureuser@20.14.98.51 run -d -p 8003:8080 k2r2t2/demoapp'
                        }
-                }*/
+                }
 	}
 }   
