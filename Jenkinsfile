@@ -43,7 +43,7 @@ pipeline {
 		      patternSeparator: '[, ]+', 
 		      remoteDirectory: '/home/ubuntu', 
 		     remoteDirectorySDF: false, removePrefix: '', 
-		     sourceFiles: '**/**)], 
+		     sourceFiles: '**/**')], 
 		    usePromotionTimestamp: false, 
 		    useWorkspaceInPromotion: false, verbose: true)])
                        }
