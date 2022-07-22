@@ -32,7 +32,7 @@ pipeline {
 		}
 		stage('Docker Build and Tag') {
                     steps {
-			    sh 'scp Dockerfile ssh://dockeradmin@3.101.138.75 /home/dockeradmin'
+			    sh 'scp ./Dockerfile ssh://dockeradmin@3.101.138.75 /home/dockeradmin'
 			    sh 'ssh://dockeradmin@3.101.138.75 docker build -t demoapp:latest .'
 			    sh 'ssh://dockeradmin@3.101.138.75 docker tag demoapp k2r2t2/demoapp:latest' 
                        }
