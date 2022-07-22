@@ -30,12 +30,21 @@ pipeline {
 				     version: '1.0.0'
 			}
 		}
-		stage('Docker Build and Tag') {
+		stage('Docker Build and Deploy') {
                     steps {
-			    sh 'sudo scp ./*.war ssh://ubuntu@3.101.138.75 /home/ubuntu'
-			    sh 'sudo scp ./Dockerfile ssh://ubuntu@3.101.138.75 /home/ubuntu'
-			    sh "ssh://ubuntu@3.101.138.75 'su dockeradmin','docker build -t demoapp:latest .'"
-			    sh 'ssh://ubuntu@3.101.138.75 "su dockeradmin", "docker tag demoapp k2r2t2/demoapp:latest"' 
+			    sshPublisher(publishers: [sshPublisherDesc(configName: 'dockerhost', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''\'su dockeradmin\',
+                           \'docker build -t demoapp:latest .\',
+                      \'docker tag demoapp k2r2t2/demoapp:latest\' , 
+                        \'docker run -d -p 8003:8080 k2r2t2/demoapp\'''', 
+	              execTimeout: 120000, 
+		      flatten: false, makeEmptyDirs: false, 
+		      noDefaultExcludes: false, 
+		      patternSeparator: '[, ]+', 
+		      remoteDirectory: '/home/ubuntu', 
+		     remoteDirectorySDF: false, removePrefix: '', 
+		     sourceFiles: '**/*.war. */Dockerfile')], 
+		    usePromotionTimestamp: false, 
+		    useWorkspaceInPromotion: false, verbose: false)])
                        }
                 }
 		/*stage('Publish Docker Image to DockerHub') {
@@ -45,10 +54,6 @@ pipeline {
 			    }
                        }
                 }*/
-		stage('RUN docker container on remote host') {
-                    steps {
-			     sh "ssh://ubuntu@3.101.138.75 'su dockeradmin', 'docker run -d -p 8003:8080 k2r2t2/demoapp'"
-                       }
-                }
+		
 	}
 }   
