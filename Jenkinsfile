@@ -42,8 +42,8 @@ pipeline {
 		      noDefaultExcludes: false, 
 		      patternSeparator: '[, ]+', 
 		      remoteDirectory: '/home/ubuntu', 
-		     remoteDirectorySDF: false, removePrefix: '/home', 
-		     sourceFiles: '/webapp/target/*.war, home/Dockerfile')], 
+		     remoteDirectorySDF: false, removePrefix: '', 
+		     sourceFiles: '**/deploy)], 
 		    usePromotionTimestamp: false, 
 		    useWorkspaceInPromotion: false, verbose: true)])
                        }
