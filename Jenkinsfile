@@ -32,22 +32,8 @@ pipeline {
 		}
 		stage('Docker Build and Tag') {
                     steps {
-			    sshPublisher(publishers: [sshPublisherDesc(configName: 'dockerhost', 
-				  transfers: [sshTransfer(cleanRemote: false, excludes: '', 
-				  execCommand: '''docker build -t demoapp:latest .
-                                  docker tag demoapp k2r2t2/demoapp:latest''', 
-                                  execTimeout: 120000, 
-				  flatten: false, 
-                                  makeEmptyDirs: false, 
-				  noDefaultExcludes: false, 
-				  patternSeparator: '[, ]+', 
-	                          remoteDirectory: '.', 
-				  remoteDirectorySDF: false, 
-				  removePrefix: 'webapp/target', 
-				  sourceFiles: 'webapp/target/*.war')], 
-			          usePromotionTimestamp: false, 
-			          useWorkspaceInPromotion: false, 
-				  verbose: false)])
+			    sh 'ssh://dockeradmin@3.101.138.75 docker build -t demoapp:latest .'
+			    sh 'ssh://dockeradmin@3.101.138.75 docker tag demoapp k2r2t2/demoapp:latest' 
                        }
                 }
 		/*stage('Publish Docker Image to DockerHub') {
@@ -59,7 +45,7 @@ pipeline {
                 }*/
 		stage('RUN docker container on remote host') {
                     steps {
-			     sh 'docker -H ssh://dockeradmin@20.14.98.51 run -d -p 8003:8080 k2r2t2/demoapp'
+			     sh 'ssh://dockeradmin@3.101.138.75 docker run -d -p 8003:8080 k2r2t2/demoapp'
                        }
                 }
 	}
