@@ -42,7 +42,7 @@ pipeline {
 		      noDefaultExcludes: false, 
 		      patternSeparator: '[, ]+', 
 		      remoteDirectory: '/home/ubuntu', 
-		     remoteDirectorySDF: false, removePrefix: '/home/ubuntu/webapp/target', 
+		     remoteDirectorySDF: false, removePrefix: '/home/ubuntu', 
 		     sourceFiles: '**/*.war, **/Dockerfile')], 
 		    usePromotionTimestamp: false, 
 		    useWorkspaceInPromotion: false, verbose: true)])
