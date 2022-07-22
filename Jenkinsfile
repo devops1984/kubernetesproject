@@ -32,7 +32,8 @@ pipeline {
 		}
 		stage('Docker Build and Deploy') {
                     steps {
-			    sshPublisher(publishers: [sshPublisherDesc(configName: 'dockerhost', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''\'su dockeradmin\',
+			    sshPublisher(publishers: [sshPublisherDesc(configName: 'dockerhost', transfers: [sshTransfer(cleanRemote: false, excludes: '', 
+			execCommand: '''\'su dockeradmin\',
                            \'docker build -t demoapp:latest .\',
                       \'docker tag demoapp k2r2t2/demoapp:latest\' , 
                         \'docker run -d -p 8003:8080 k2r2t2/demoapp\'''', 
@@ -42,7 +43,7 @@ pipeline {
 		      patternSeparator: '[, ]+', 
 		      remoteDirectory: '/home/ubuntu', 
 		     remoteDirectorySDF: false, removePrefix: '', 
-		     sourceFiles: '**/*.war. */Dockerfile')], 
+		     sourceFiles: '**/*.war, ./Dockerfile')], 
 		    usePromotionTimestamp: false, 
 		    useWorkspaceInPromotion: false, verbose: false)])
                        }
