@@ -32,10 +32,10 @@ pipeline {
 		}
 		stage('Docker Build and Tag') {
                     steps {
-			    sh 'sudo scp ./*.war ssh://dockeradmin@3.101.138.75 /home/ubuntu'
-			    sh 'sudo scp ./Dockerfile ssh://dockeradmin@3.101.138.75 /home/ubuntu'
-			    sh 'ssh://dockeradmin@3.101.138.75 docker build -t demoapp:latest .'
-			    sh 'ssh://dockeradmin@3.101.138.75 docker tag demoapp k2r2t2/demoapp:latest' 
+			    sh 'sudo scp ./*.war ssh://ubuntu@3.101.138.75 /home/ubuntu'
+			    sh 'sudo scp ./Dockerfile ssh://ubuntu@3.101.138.75 /home/ubuntu'
+			    sh "ssh://ubuntu@3.101.138.75 'su dockeradmin','docker build -t demoapp:latest .'"
+			    sh 'ssh://ubuntu@3.101.138.75 "su dockeradmin", "docker tag demoapp k2r2t2/demoapp:latest"' 
                        }
                 }
 		/*stage('Publish Docker Image to DockerHub') {
@@ -47,7 +47,7 @@ pipeline {
                 }*/
 		stage('RUN docker container on remote host') {
                     steps {
-			     sh 'ssh://dockeradmin@3.101.138.75 docker run -d -p 8003:8080 k2r2t2/demoapp'
+			     sh "ssh://ubuntu@3.101.138.75 'su dockeradmin', 'docker run -d -p 8003:8080 k2r2t2/demoapp'"
                        }
                 }
 	}
