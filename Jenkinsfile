@@ -45,7 +45,7 @@ pipeline {
 		     remoteDirectorySDF: false, removePrefix: '', 
 		     sourceFiles: '**/*.war, ./Dockerfile')], 
 		    usePromotionTimestamp: false, 
-		    useWorkspaceInPromotion: false, verbose: false)])
+		    useWorkspaceInPromotion: false, verbose: true)])
                        }
                 }
 		/*stage('Publish Docker Image to DockerHub') {
