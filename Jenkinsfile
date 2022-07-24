@@ -33,7 +33,7 @@ pipeline {
 		stage('Docker Build and Deploy') {
                     steps {
 			    sshPublisher(publishers: [sshPublisherDesc(configName: 'dockerhost', transfers: [sshTransfer(cleanRemote: false, excludes: '', 
-			execCommand: 'sh **/*/deploy.sh', 
+			execCommand: 'sh */deploy.sh', 
 	              execTimeout: 120000, 
 		      flatten: false, makeEmptyDirs: false, 
 		      noDefaultExcludes: false, 
