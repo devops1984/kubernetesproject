@@ -34,7 +34,7 @@ pipeline {
                     steps {
 			    sshPublisher(publishers: [sshPublisherDesc(configName: 'dockerhost', transfers: [sshTransfer(cleanRemote: false, excludes: '', 
 			//execCommand: 'sudo chmod +x deploy.sh; sh ./deploy.sh', 
-	              execCommand: 'sudo docker login; sudo docker build -t k2r2t2/demoapp -f Dockerfile; docker run -d --name mytomcat -p 8080:8080 k2r2t2/demoapp:latest',
+	              execCommand: 'sudo docker login; sudo docker build -t k2r2t2/demoapp -f ../Dockerfile; docker run -d --name mytomcat -p 8080:8080 k2r2t2/demoapp:latest',
 		      execTimeout: 120000, 
 		      flatten: false, makeEmptyDirs: false, 
 		      noDefaultExcludes: false, 
