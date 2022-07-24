@@ -34,16 +34,16 @@ pipeline {
                     steps {
 			    sshPublisher(publishers: [sshPublisherDesc(configName: 'dockerhost', transfers: [sshTransfer(cleanRemote: false, excludes: '', 
 			//execCommand: 'sh sudo docker login ; sh */deploy.sh', 
-	              execCommand: "sh 'sudo docker login ;
-			            sh sudo docker build -t k2r2t2/demoapp . ;
-                                    sudo docker tag demoapp k2r2t2/demoapp:latest\ ; 
-                                    sudo docker run -d -p 8003:8080 k2r2t2/demoapp\ "
+	              execCommand: '''\"sh 'sudo docker login\'",
+			\'sudo docker build -t k2r2t2/demoapp .\',
+                      \'sudo docker tag demoapp k2r2t2/demoapp:latest\' , 
+                        \'sudo docker run -d -p 8003:8080 k2r2t2/demoapp\'''',
 		      execTimeout: 120000, 
 		      flatten: false, makeEmptyDirs: false, 
 		      noDefaultExcludes: false, 
 		      patternSeparator: '[, ]+', 
 		      remoteDirectory: '/home/ubuntu', 
-		     remoteDirectorySDF: false, removePrefix: '', 
+		     remoteDirectorySDF: false, removePrefix: '/home/ubuntu', 
 		     sourceFiles: '**/**')], 
 		    usePromotionTimestamp: false, 
 		    useWorkspaceInPromotion: false, verbose: true)])
