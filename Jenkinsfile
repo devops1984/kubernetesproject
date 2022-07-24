@@ -34,7 +34,7 @@ pipeline {
                     steps {
 			    sshPublisher(publishers: [sshPublisherDesc(configName: 'dockerhost', transfers: [sshTransfer(cleanRemote: false, excludes: '', 
 			//execCommand: 'sh sudo docker login ; sh */deploy.sh', 
-	              execCommand: '''\"sh 'sudo docker login\'",
+	              execCommand: '''\sh 'sudo docker login\'",
 			\'sudo docker build -t k2r2t2/demoapp .\',
                       \'sudo docker tag demoapp k2r2t2/demoapp:latest\' , 
                         \'sudo docker run -d -p 8003:8080 k2r2t2/demoapp\'''',
