@@ -33,7 +33,8 @@ pipeline {
 		stage('Docker Build and Deploy') {
                     steps {
 			    sshPublisher(publishers: [sshPublisherDesc(configName: 'dockerhost', transfers: [sshTransfer(cleanRemote: false, excludes: '', 
-			execCommand: '''\'sudo docker login\',\'sudo docker build -t k2r2t2/demoapp .\',
+			execCommand: '''\'sudo docker login\',
+			\'sudo docker build -t k2r2t2/demoapp .\',
                       \'sudo docker tag demoapp k2r2t2/demoapp:latest\' , 
                         \'sudo docker run -d -p 8003:8080 k2r2t2/demoapp\'''', 
 	              execTimeout: 120000, 
