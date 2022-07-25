@@ -1,24 +1,16 @@
 pipeline {
     agent any
-	tools {
-	    maven 'maven'
+	environment {
+	    PATH = "$PATH:/usr/share/maven/bin"
 	}
 	stages {
-stage('Sonar Analysis') {
-  environment {
-    SCANNER_HOME = tool 'Sonarqube'
-    ORGANIZATION = "igorstojanovski-github"
-    PROJECT_NAME = "igorstojanovski_jenkins-pipeline-as-code"
-  }
-  steps {
-    withSonarQubeEnv('Sonarqube') {
-        sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.organization=$ORGANIZATION \
-        -Dsonar.java.binaries=build/classes/ \
-        -Dsonar.projectKey=$PROJECT_NAME \
-        -Dsonar.sources=.'''
-    }
-  }
-}
+            stage('Sonar Analysis') {
+              steps {
+                  withSonarQubeEnv('Sonarqube') {
+                      sh "mvn sonar:sonar"
+                             }
+                        }
+             }
 	    stage('Build'){
 		    steps{
 			     sh script: 'mvn clean package'
