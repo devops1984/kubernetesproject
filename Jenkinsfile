@@ -5,18 +5,20 @@ pipeline {
 	}
 	stages {
 	    stage('Sonarqube') {
-                environment {
-                   scannerHome = tool 'Sonarqube'
-                    }
-                 steps {
-                      withSonarQubeEnv('sonarqube') {
-                      sh "${scannerHome}/bin/sonar-scanner"
-                    }
-                       timeout(time: 10, unit: 'MINUTES') {
-                          waitForQualityGate abortPipeline: true
-                    }
-                 }
-            }	
+               environment {
+                  SCANNER_HOME = tool 'Sonarqube'
+                  ORGANIZATION = "igorstojanovski-github"
+                  PROJECT_NAME = "igorstojanovski_jenkins-pipeline-as-code"
+               }
+              steps {
+                 withSonarQubeEnv('Sonarqube') {
+                       sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.organization=$ORGANIZATION \
+                       -Dsonar.java.binaries=build/classes/java/ \
+                       -Dsonar.projectKey=$PROJECT_NAME \
+                       -Dsonar.sources=.'''
+                     }
+                  }
+              }
 	    stage('Build'){
 		    steps{
 			     sh script: 'mvn clean package'
