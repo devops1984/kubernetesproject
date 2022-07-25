@@ -19,6 +19,14 @@
     <finalName>${project.artifactId}</finalName>
   </build>
 
+  <plugins>
+   <plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>sonar-maven-plugin</artifactId>
+    <version>3.0.2</version>
+  </plugin>
+  </plugins>
+         
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
