@@ -5,18 +5,18 @@ pipeline {
 	}
 	stages {
 	    stage('Sonarqube') {
-                 environment {
-                  scannerHome = tool 'Sonarqube'
-                    }
-                 steps {
-                   withSonarQubeEnv('Sonarqube') {
-                           sh '"${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=$PROJECT_NAME"'
-                    }
-                     timeout(time: 10, unit: 'MINUTES') {
-                           waitForQualityGate abortPipeline: true
-                                }
-                          }
-                 }
+  environment {
+    SCANNER_HOME = tool 'Sonarqube'
+  }
+  steps {
+    withSonarQubeEnv('Sonarqube') {
+        sh '''$SCANNER_HOME/bin/sonar-scanner 
+        
+        -Dsonar.projectKey=$PROJECT_NAME \
+        -Dsonar.sources=.'''
+    }
+  }
+}
 	    stage('Build'){
 		    steps{
 			     sh script: 'mvn clean package'
