@@ -3,21 +3,21 @@ pipeline {
 	environment {
 	    PATH = "$PATH:/usr/share/maven/bin"
 	}
-	
-	    stage('Build'){
-		    steps{
-			     sh script: 'mvn clean package'
-			     
-			}
-		}
-		stages {
+	 stages {
             stage('Sonar Analysis') {
               steps {
                   withSonarQubeEnv('Sonarqube') {
                       sh "mvn sonar:sonar"
                              }
                         }
-             }
+               }
+	       stage('Build'){
+		    steps{
+			     sh "mvn clean package"
+			     
+			}
+		}
+
 		stage('Upload War to Nexus'){
 		    steps{
 			     nexusArtifactUploader artifacts: [
