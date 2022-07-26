@@ -59,7 +59,7 @@ pipeline {
 				 sh 'whoami'
 				 sh 'pwd'
 				 sh 'ls -lrt'
-				 sh 'docker build -t k2r2t2/demoapp .'
+				 sh 'sudo docker build -t k2r2t2/demoapp .'
                                            }
                                     }
                   }
