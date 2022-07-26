@@ -38,7 +38,7 @@ pipeline {
 				     version: '1.0.0'
 			}
 		}
-		stage('Docker Build and Deploy') {
+		stage('Transfer files to DockerHost') {
                     steps {
 			    sshPublisher(publishers: [sshPublisherDesc(configName: 'dockerhost', transfers: [sshTransfer(cleanRemote: false, excludes: '', 
 	              execCommand: '',
@@ -53,6 +53,15 @@ pipeline {
 		    useWorkspaceInPromotion: false, verbose: true)])
                        }
                 }
+		stage ('Create Docker Image') {
+                     steps{
+                        sshagent(credentials : ['dockerhost']) {
+                                sh 'ssh -o StrictHostKeyChecking=no ubuntu@3.101.133.109 uptime'
+                                sh 'ssh -v ubuntu@3.101.133.109'
+                                sh 'sudo docker build -t k2r2t2/demoapp .'
+                                           }
+                                    }
+                  }
 		/*stage('Publish Docker Image to DockerHub') {
                     steps {
 			    withDockerRegistry([credentialsID: "dockerHub" , url: ""])	{	    
