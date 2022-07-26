@@ -57,7 +57,6 @@ pipeline {
                      steps{
                         sshagent(credentials : ['dockerhost']) {
 				 sh 'whoami'
-				 sh 'sudo -i'
 				 sh 'su - jenkins'
 				 sh 'pwd'
 				 sh 'cd ..'
