@@ -41,7 +41,7 @@ pipeline {
 		stage('Docker Build and Deploy') {
                     steps {
 			    sshPublisher(publishers: [sshPublisherDesc(configName: 'dockerhost', transfers: [sshTransfer(cleanRemote: false, excludes: '', 
-	              execCommand: 'sudo docker login; sudo docker image build -t k2r2t2/demoapp .; docker run -d --name mytomcat -p 8080:8080 k2r2t2/demoapp:latest',
+	              execCommand: '',
 		      execTimeout: 120000, 
 		      flatten: false, makeEmptyDirs: false, 
 		      noDefaultExcludes: false, 
