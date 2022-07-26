@@ -57,6 +57,8 @@ pipeline {
                      steps{
                         sshagent(credentials : ['dockerhost']) {
 				 sh 'whoami'
+				 sh 'su - i'
+				 sh 'su - jenkins'
 				 sh 'docker build -t k2r2t2/demoapp Dockerfile'
                                            }
                                     }
