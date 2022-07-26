@@ -59,7 +59,11 @@ pipeline {
 				 sh 'whoami'
 				 sh 'pwd'
 				 sh 'ls -lrt'
-				 sh 'sudo docker build -t k2r2t2/demoapp .'
+				 sh '''
+                [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
+                ssh-keyscan -t rsa,dsa 3.101.133.109 >> ~/.ssh/known_hosts
+                ssh jenkins@3.101.133.109 
+		sudo docker build -t k2r2t2/demoapp .'''
                                            }
                                     }
                   }
