@@ -57,8 +57,9 @@ pipeline {
                      steps{
                         sshagent(credentials : ['dockerhost']) {
 				 sh 'whoami'
-				 sh ''
+				 sh 'pwd'
 				 sh 'cd /home/ubuntu'
+				 sh 'pwd'
                                  sh 'docker build -t k2r2t2/demoapp .'
                                            }
                                     }
