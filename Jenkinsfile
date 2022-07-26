@@ -56,9 +56,7 @@ pipeline {
 		stage ('Create Docker Image') {
                      steps{
                         sshagent(credentials : ['dockerhost']) {
-                                sh 'ssh -o StrictHostKeyChecking=no ubuntu@3.101.133.109 uptime'
-                                sh 'ssh -v ubuntu@3.101.133.109'
-                                sh 'sudo docker build -t k2r2t2/demoapp .'
+                                 sh 'docker build -t k2r2t2/demoapp .'
                                            }
                                     }
                   }
