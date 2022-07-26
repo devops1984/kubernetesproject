@@ -7,13 +7,13 @@ pipeline {
             stage('Sonar Analysis') {
               steps {
                   withSonarQubeEnv('Sonarqube') {
-                      sh "sudo mvn sonar:sonar"
+                      sh " mvn sonar:sonar"
                              }
                         }
                }
 	       stage('Build'){
 		    steps{
-			     sh "sudo mvn clean package"
+			     sh " mvn clean package"
 			     
 			}
 		}
