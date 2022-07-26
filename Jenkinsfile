@@ -56,7 +56,7 @@ pipeline {
 		stage ('Create Docker Image') {
                      steps{
                         sshagent(credentials : ['dockerhost']) {
-                                 sh 'docker build -t k2r2t2/demoapp .'
+                                 sh 'docker build -t k2r2t2/demoapp /home/ubuntu/home/ubuntu/Dockerfile'
                                            }
                                     }
                   }
