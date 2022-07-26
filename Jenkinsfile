@@ -4,20 +4,19 @@ pipeline {
 	    PATH = "$PATH:/usr/share/maven/bin"
 	}
 	 stages {
-            stage('Sonar Analysis') {
-              steps {
-                  withSonarQubeEnv('Sonarqube') {
-                      sh " mvn sonar:sonar"
-                             }
-                        }
-               }
-	       stage('Build'){
+                stage('Build'){
 		    steps{
 			     sh " mvn clean package"
 			     
 			}
 		}
-
+               stage('Sonar Analysis') {
+                     steps {
+                      withSonarQubeEnv('Sonarqube') {
+                             sh " mvn sonar:sonar"
+                             }
+                     }
+               }
 		stage('Upload War to Nexus'){
 		    steps{
 			     nexusArtifactUploader artifacts: [
