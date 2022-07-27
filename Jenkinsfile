@@ -60,8 +60,8 @@ pipeline {
 				  execCommand: '''sh 
 					       cd /home/jenkins;
 					       docker build -t k2r2t2/demoapp .;
-					       docker run -d --name dempapp -p 8080:8080 k2r2t2/demoapp
-					       '''
+					       docker run -d --name dempapp -p 8080:8080 k2r2t2/demoapp'''
+					  
 				  execTimeout: 120000, flatten: false, 
 				  makeEmptyDirs: false, 
 				  noDefaultExcludes: false, 
