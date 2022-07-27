@@ -57,8 +57,8 @@ pipeline {
                      steps{
 			sh "pwd"
 			sh "ls -lrt"
-                       
-			sh "docker -H ssh://jenkins@3.101.133.109 run hello world"     
+                        sh "ssh jenkins@3.101.133.109"
+			sh "docker -H  run hello world"     
                                     }
                   }
 		/*stage('Publish Docker Image to DockerHub') {
