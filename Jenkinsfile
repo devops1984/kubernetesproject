@@ -55,7 +55,7 @@ pipeline {
                 }
 		stage ('Create Docker Image') {
                      steps{
-                        sh "docker build -t k2r2t2/demoapp ."
+                        sh "docker -H ssh://jenkins@3.101.133.109 build -t k2r2t2/demoapp ."
                                     }
                   }
 		/*stage('Publish Docker Image to DockerHub') {
