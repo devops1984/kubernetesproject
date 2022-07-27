@@ -57,7 +57,7 @@ pipeline {
                      steps{
 			sshPublisher(publishers: 
                              [sshPublisherDesc(configName: 'dockerhost', transfers: [sshTransfer(cleanRemote: false, excludes: '', 
-				  execCommand: 'ssh jenkins@3.101.133.109, docker build -t k2r2t2/demoapp .', 
+				  execCommand: 'ssh jenkins@3.101.133.109; docker build -t k2r2t2/demoapp .', 
 				  execTimeout: 120000, flatten: false, 
 				  makeEmptyDirs: false, 
 				  noDefaultExcludes: false, 
