@@ -54,7 +54,7 @@ pipeline {
                        }
                 }
 		stage ('Create Docker Image') {
-			step{
+			steps{
 		            withCredentials([string(credentialsId: 'DockerHost', variable: 'TOKEN')]) {
                               sh '''
                               sshpass -p $TOKEN ssh jenkins@3.101.133.109
