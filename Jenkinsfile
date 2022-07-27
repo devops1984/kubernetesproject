@@ -54,19 +54,15 @@ pipeline {
                        }
                 }
 		stage ('Create Docker Image') {
-                     steps{
-			sshagent(credentials: ['dockerhost']) {
-                               sh 'pwd'
-			       
-			       sh 'ssh jenkins@3.101.133.109'
-			       sh 'cd home/ubuntu'	
-                               sh 'sudo docker build -t k2r2t2/demoapp .'
-			       sh 'sudo docker run -d --name demoapp -p 8003:8080 k2r2t2/demoapp'
-			       sh 'docker exec demoapp mv webapps webapps2'	 
-			       sh 'docker exec demoapp mv webapps.dist webapps'	
-                                 }
-                          }
-                  }
+			step{
+		            withCredentials([string(credentialsId: 'DockerHost', variable: 'TOKEN')]) {
+                              sh '''
+                              sshpass -p $TOKEN ssh jenkins@3.101.133.109
+                              pwd
+                              '''
+                                       }
+                              }
+		}
 		/*stage('Publish Docker Image to DockerHub') {
                     steps {
 			    withDockerRegistry([credentialsID: "dockerHub" , url: ""])	{	    
