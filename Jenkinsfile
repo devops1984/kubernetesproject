@@ -53,7 +53,7 @@ pipeline {
 		    useWorkspaceInPromotion: false, verbose: true)])
                        }
                 }
-		stage ('Create Docker Image') {
+		stage ('Deploy on docker container') {
 			steps{
 			sshagent(credentials: ['dockerhost']) {
                                sh 'pwd'
