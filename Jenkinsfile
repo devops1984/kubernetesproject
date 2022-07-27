@@ -57,8 +57,6 @@ pipeline {
 			steps{
 			sshagent(credentials: ['dockerhost']) {
                                sh 'pwd'
-			       
-			       sh 'ssh jenkins@3.101.133.109'
 			       sh 'cd home/ubuntu'	
                                sh 'sudo docker build -t k2r2t2/demoapp .'
 			       sh 'sudo docker run -d --name demoapp -p 8003:8080 k2r2t2/demoapp'
