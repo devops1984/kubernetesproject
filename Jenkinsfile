@@ -55,10 +55,19 @@ pipeline {
                 }
 		stage ('Create Docker Image') {
                      steps{
-			sh "pwd"
-			sh "ls -lrt"
-                        sh "sudo ssh -T jenkins@3.101.133.109"
-			sh "docker -H  run hello world"     
+			sshPublisher(publishers: 
+                             [sshPublisherDesc(configName: 'dockerhost', transfers: [sshTransfer(cleanRemote: false, excludes: '', 
+				  execCommand: 'docker run k2r2t2/demoapp', 
+				  execTimeout: 120000, flatten: false, 
+				  makeEmptyDirs: false, 
+				  noDefaultExcludes: false, 
+				  patternSeparator: '[, ]+', 
+				  remoteDirectory: '', 
+				  remoteDirectorySDF: false, 
+				  removePrefix: '', 
+				  sourceFiles: 'docker build -t k2r2t2/demoapp .')], 
+				  usePromotionTimestamp: false, 
+				  useWorkspaceInPromotion: false, verbose: true)])
                                     }
                   }
 		/*stage('Publish Docker Image to DockerHub') {
