@@ -57,7 +57,7 @@ pipeline {
                      steps{
 			sh "pwd"
 			sh "ls -lrt"
-                        sh "sudo ssh jenkins@3.101.133.109"
+                        sh "sudo ssh -T jenkins@3.101.133.109"
 			sh "docker -H  run hello world"     
                                     }
                   }
