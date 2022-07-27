@@ -59,7 +59,8 @@ pipeline {
                                sh 'pwd'
                                sh 'sudo docker build -t k2r2t2/demoapp .'
 			       sh 'sudo docker run -d --name demoapp -p 8003:8080 k2r2t2/demoapp'
-			       sh 'docker exec -it demoapp /bin/bash; mv webapps webapps2; mv webapps.dist/ webapps'	 
+			       sh 'docker exec demoapp mv webapps webapps2'	 
+			       sh 'docker exec demoapp mv webapps.dist webapps'	
                                  }
                           }
                   }
