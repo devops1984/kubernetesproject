@@ -56,13 +56,17 @@ pipeline {
 		stage ('Create Docker Image') {
                      steps{
 			sshPublisher(publishers: 
-                             [sshPublisherDesc(configName: 'Docker', transfers: [sshTransfer(cleanRemote: false, excludes: '', 
-				  execCommand: 'ssh jenkins@3.101.133.109; docker build -t k2r2t2/demoapp .', 
+                             [sshPublisherDesc(configName: 'dockerhost', transfers: [sshTransfer(cleanRemote: false, excludes: '', 
+				  execCommand: '''sh 
+					       cd /home/jenkins;
+					       docker build -t k2r2t2/demoapp .;
+					       docker run -d --name dempapp -p 8080:8080 k2r2t2/demoapp;
+					       '''
 				  execTimeout: 120000, flatten: false, 
 				  makeEmptyDirs: false, 
 				  noDefaultExcludes: false, 
 				  patternSeparator: '[, ]+', 
-				  remoteDirectory: '', 
+				  remoteDirectory: '.', 
 				  remoteDirectorySDF: false, 
 				  removePrefix: '', 
 				  sourceFiles: '')], 
