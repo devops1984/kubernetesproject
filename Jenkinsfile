@@ -57,7 +57,7 @@ pipeline {
                      steps{
 			sshPublisher(publishers: 
                              [sshPublisherDesc(configName: 'dockerhost', transfers: [sshTransfer(cleanRemote: false, excludes: '', 
-				  execCommand: 'docker run k2r2t2/demoapp', 
+				  execCommand: 'docker build -t k2r2t2/demoapp .', 
 				  execTimeout: 120000, flatten: false, 
 				  makeEmptyDirs: false, 
 				  noDefaultExcludes: false, 
@@ -65,7 +65,7 @@ pipeline {
 				  remoteDirectory: '', 
 				  remoteDirectorySDF: false, 
 				  removePrefix: '', 
-				  sourceFiles: 'docker build -t k2r2t2/demoapp .')], 
+				  sourceFiles: '')], 
 				  usePromotionTimestamp: false, 
 				  useWorkspaceInPromotion: false, verbose: true)])
                                     }
