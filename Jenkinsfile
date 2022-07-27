@@ -55,16 +55,7 @@ pipeline {
                 }
 		stage ('Create Docker Image') {
                      steps{
-                        sshagent(credentials : ['dockerhost']) {
-				 sh 'whoami'
-				 sh 'pwd'
-				 sh 'ls -lrt'
-				 sh '''
-                [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
-                ssh-keyscan -t rsa,dsa 3.101.133.109 >> ~/.ssh/known_hosts
-                ssh jenkins@3.101.133.109 
-		sudo docker build -t k2r2t2/demoapp .'''
-                                           }
+                        sh "docker build -t k2r2t2/demoapp ."
                                     }
                   }
 		/*stage('Publish Docker Image to DockerHub') {
