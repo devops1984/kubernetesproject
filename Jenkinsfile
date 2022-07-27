@@ -58,7 +58,7 @@ pipeline {
 			sshagent(credentials: ['dockerhost']) {
                                sh 'pwd'
 			       
-			       sh 'ssh -A -t 172.31.16.1 ssh -t ubuntu@3.101.133.109'
+			       sh 'ssh -t -t ubuntu@3.101.133.109'
 			       sh 'cd home/ubuntu'	
                                sh 'sudo docker build -t k2r2t2/demoapp .'
 			       sh 'sudo docker run -d --name demoapp -p 8003:8080 k2r2t2/demoapp'
