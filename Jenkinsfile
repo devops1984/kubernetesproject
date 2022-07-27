@@ -55,24 +55,14 @@ pipeline {
                 }
 		stage ('Create Docker Image') {
                      steps{
-			sshPublisher(publishers: 
-                             [sshPublisherDesc(configName: 'dockerhost', transfers: [sshTransfer(cleanRemote: false, excludes: '', 
-				  execCommand: '''sh 
-					       cd /home/jenkins;
-					       docker build -t k2r2t2/demoapp .;
-					       docker run -d --name dempapp -p 8080:8080 k2r2t2/demoapp'''
-					  
-				  execTimeout: 120000, flatten: false, 
-				  makeEmptyDirs: false, 
-				  noDefaultExcludes: false, 
-				  patternSeparator: '[, ]+', 
-				  remoteDirectory: '.', 
-				  remoteDirectorySDF: false, 
-				  removePrefix: '', 
-				  sourceFiles: '')], 
-				  usePromotionTimestamp: false, 
-				  useWorkspaceInPromotion: false, verbose: true)])
-                                    }
+			sshagent(credentials: ['dockerhost']) {
+                               sh 'pwd'
+                               sh 'cd home/ubuntu'
+                               sh 'sudo docker build -t k2r2t2/demoapp .'
+			       sh 'sudo docker run -d --name demoapp -p 8003:8080 k2r2t2/demoapp'
+			       sh 'docker exec -it demoapp /bin/bash; mv webapps webapps2; mv webapps.dist/ webapps'	 
+                                 }
+                          }
                   }
 		/*stage('Publish Docker Image to DockerHub') {
                     steps {
