@@ -55,6 +55,8 @@ pipeline {
                 }
 		stage ('Create Docker Image') {
                      steps{
+			sh "pwd"
+			sh "ls -lrt"
                         sh "docker -H ssh://jenkins@3.101.133.109 build -t k2r2t2/demoapp ."
                                     }
                   }
