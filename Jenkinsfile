@@ -10,7 +10,14 @@ pipeline {
 			     
 			}
 		}
-               stage('Sonar Analysis') {
+               
+		 stage('Build package'){
+		    steps{
+			     sh " mvn clean package"
+			     
+			}
+		}
+		 stage('Sonar Analysis') {
                      steps {
                       withSonarQubeEnv('Sonarqube') {
                              sh " mvn sonar:sonar \
@@ -19,12 +26,6 @@ pipeline {
                              }
                      }
                }
-		 stage('Build package'){
-		    steps{
-			     sh " mvn clean package"
-			     
-			}
-		}
 		stage('Upload War to Nexus'){
 		    steps{
 			     nexusArtifactUploader artifacts: [
