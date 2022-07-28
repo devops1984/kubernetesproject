@@ -51,7 +51,7 @@ pipeline {
 			      [sshPublisherDesc(configName: 'jenkins', 
 				  transfers: [sshTransfer(cleanRemote: false, 
 				  excludes: '', 
-				  execCommand: 'rsync -avh  /var/lib/jenkins/workspace/demo-project/webapp/target/*.war root@172.31.7.170:/opt/*.war', 
+				  execCommand: 'rsync -avh  /var/lib/jenkins/workspace/demo-project/webapp/target/*.war root@172.31.7.170:/opt/webapp.war', 
 				  execTimeout: 120000, flatten: false, 
 				  makeEmptyDirs: false, noDefaultExcludes: false, 
 				  patternSeparator: '[, ]+', 
