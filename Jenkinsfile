@@ -6,7 +6,7 @@ pipeline {
 	 stages {
                 stage('Build'){
 		    steps{
-			     sh " mvn clean package"
+			     sh " mvn clean install"
 			     
 			}
 		}
@@ -19,6 +19,12 @@ pipeline {
                              }
                      }
                }
+		 stage('Build package'){
+		    steps{
+			     sh " mvn clean package"
+			     
+			}
+		}
 		stage('Upload War to Nexus'){
 		    steps{
 			     nexusArtifactUploader artifacts: [
@@ -40,29 +46,22 @@ pipeline {
 		}
 		stage('Transfer files to DockerHost') {
                     steps {
-			    sshPublisher(publishers: [sshPublisherDesc(configName: 'dockerhost', transfers: [sshTransfer(cleanRemote: false, excludes: '', 
-	              execCommand: '',
-		      execTimeout: 120000, 
-		      flatten: false, makeEmptyDirs: false, 
-		      noDefaultExcludes: false, 
-		      patternSeparator: '[, ]+', 
-		      remoteDirectory: '/home/ubuntu', 
-		     remoteDirectorySDF: false, removePrefix: '', 
-		     sourceFiles: '**/**')], 
-		    usePromotionTimestamp: false, 
-		    useWorkspaceInPromotion: false, verbose: true)])
+			    sshPublisher(publishers: 
+			      [sshPublisherDesc(configName: 'jenkins', 
+				  transfers: [sshTransfer(cleanRemote: false, 
+				  excludes: '', 
+				  execCommand: 'rsync -avh  /var/lib/jenkins/workspace/demo-project1/webapp/target/*.war root@172.31.7.170:/opt/*.war', 
+				  execTimeout: 120000, flatten: false, 
+				  makeEmptyDirs: false, noDefaultExcludes: false, 
+				  patternSeparator: '[, ]+', 
+				  remoteDirectory: '', remoteDirectorySDF: false, 
+				  removePrefix: '', sourceFiles: '')], 
+				  usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
                        }
                 }
 		stage ('Deploy on docker container') {
 			steps{
-			sshagent(credentials: ['dockerhost']) {
-                               sh 'pwd'
-			       sh 'cd /home/ubuntu'	
-                               sh 'sudo docker build -t k2r2t2/demoapp .'
-			       sh 'sudo docker run -d --name demoapp -p 8003:8080 k2r2t2/demoapp'
-			       sh 'docker exec demoapp mv webapps webapps2'	 
-			       sh 'docker exec demoapp mv webapps.dist webapps'	
-                                 }
+			
                           }
 		}
 		/*stage('Publish Docker Image to DockerHub') {
