@@ -44,7 +44,7 @@ pipeline {
 				     version: '1.0.0'
 			}
 		}
-		stage('Transfer files to DockerHost') {
+		stage('Transfer artifact to Ansible') {
                     steps {
 			    sshPublisher(publishers: 
 			      [sshPublisherDesc(configName: 'jenkins', 
@@ -59,9 +59,17 @@ pipeline {
 				  usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
                        }
                 }
-		stage ('Deploy on docker container') {
+		stage ('Run Ansible Playbook') {
 			steps{
-			
+			      sshPublisher(publishers: 
+				 [sshPublisherDesc(configName: 'ansible', 
+				     transfers: [sshTransfer(cleanRemote: false, 
+					  excludes: '', execCommand: 'ansible-playbook /sourcecode/demoproject.yml', 
+					  execTimeout: 120000, flatten: false, 
+					  makeEmptyDirs: false, noDefaultExcludes: false, 
+					  patternSeparator: '[, ]+', remoteDirectory: '', 
+					  remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], 
+					  usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
                           }
 		}
 		/*stage('Publish Docker Image to DockerHub') {
