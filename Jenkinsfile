@@ -16,7 +16,7 @@ pipeline {
 			          -Dsonar.host.url=http://54.183.145.72:9000 \
 			          -Dsonar.login=sqa_6abde3937772d88f85a81d5569453c7ab5c5b5a8"
                              }
-                     }
+                      }
                }
 		stage('Upload War to Nexus'){
 		    steps{
