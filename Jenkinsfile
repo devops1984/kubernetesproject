@@ -4,14 +4,7 @@ pipeline {
 	    PATH = "$PATH:/usr/share/maven/bin"
 	}
 	 stages {
-                stage('Build'){
-		    steps{
-			     sh " mvn clean install"
-			     
-			}
-		}
-               
-		 stage('Build package'){
+                stage('Maven Build'){
 		    steps{
 			     sh " mvn clean package"
 			     
