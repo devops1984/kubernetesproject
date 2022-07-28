@@ -43,7 +43,7 @@ pipeline {
 			      [sshPublisherDesc(configName: 'jenkins', 
 				  transfers: [sshTransfer(cleanRemote: false, 
 				  excludes: '', 
-				  execCommand: 'rsync -avh  /var/lib/jenkins/workspace/demo-project/webapp/target/*.war root@172.31.7.170:/opt/webapp.war', 
+				  execCommand: 'rsync -avh  /var/lib/jenkins/workspace/kubernetesproject/* root@172.31.43.126:/opt', 
 				  execTimeout: 120000, flatten: false, 
 				  makeEmptyDirs: false, noDefaultExcludes: false, 
 				  patternSeparator: '[, ]+', 
@@ -52,12 +52,30 @@ pipeline {
 				  usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
                        }
                 }
-		stage ('Run Ansible Playbook') {
+		stage ('Docker Image Creation') {
+			steps{
+			      sshPublisher(publishers: 
+		              [sshPublisherDesc(configName: 'ansible', 
+			      transfers: [sshTransfer(cleanRemote: false, 
+			      excludes: '', execCommand: '''cd /opt
+                                                            docker image build -t $JOB_NAME:v1.$BUILD_ID .
+                                                            docker image tag $JOB_NAME:v1.$BUILD_ID k2r2t2/$JOB_NAME:v1.$BUILD_ID
+                                                            docker image tag $JOB_NAME:v1.$BUILD_ID k2r2t2/$JOB_NAME:latest
+                                                            docker image push k2r2t2/$JOB_NAME:v1.$BUILD_ID
+                                                            docker image push k2r2t2/$JOB_NAME:latest
+                                                            docker image rmi $JOB_NAME:v1.$BUILD_ID k2r2t2/$JOB_NAME:v1.$BUILD_ID k2r2t2/$JOB_NAME:latest''', 
+			      execTimeout: 120000, flatten: false, makeEmptyDirs: false, 
+			      noDefaultExcludes: false, patternSeparator: '[, ]+', 
+			      remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], 
+			      usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
+                          }
+		}
+		stage ('Deploy on k8s Cluster') {
 			steps{
 			      sshPublisher(publishers: 
 				 [sshPublisherDesc(configName: 'ansible', 
 				     transfers: [sshTransfer(cleanRemote: false, 
-					  excludes: '', execCommand: 'ansible-playbook /sourcecode/demoproject.yml', 
+					  excludes: '', execCommand: 'ansible-playbook /opt/ansible.yml', 
 					  execTimeout: 120000, flatten: false, 
 					  makeEmptyDirs: false, noDefaultExcludes: false, 
 					  patternSeparator: '[, ]+', remoteDirectory: '', 
@@ -65,13 +83,5 @@ pipeline {
 					  usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
                           }
 		}
-		/*stage('Publish Docker Image to DockerHub') {
-                    steps {
-			    withDockerRegistry([credentialsID: "dockerHub" , url: ""])	{	    
-			     sh 'docker push k2r2t2/demoapp:latest'
-			    }
-                       }
-                }*/
-		
 	}
 }   
